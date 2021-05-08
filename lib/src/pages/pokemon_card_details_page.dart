@@ -23,12 +23,12 @@ class PokemonCardDetailsPage extends StatelessWidget {
             height: MediaQuery.of(context).size.height / 3,
             fit: BoxFit.contain,
             placeholder: (context, url) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             },
             errorWidget: (context, url, error) {
-              return Center(
+              return const Center(
                 child: Text(
                   'Image not found.',
                 ),
