@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokemon_tcg_app/src/pages/pokemon_cards_page.dart';
+import 'package:pokemon_tcg_app/src/pages/pages.dart';
 
 void main() {
   runApp(MyApp());

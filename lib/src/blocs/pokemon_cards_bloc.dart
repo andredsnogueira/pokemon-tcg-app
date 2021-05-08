@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pokemon_tcg_app/src/models/pokemon_card.dart';
+import 'package:pokemon_tcg_app/src/models/models.dart';
 import 'package:pokemon_tcg_app/src/repositories/pokemon_tcg_repository.dart';
 
 part 'pokemon_cards_event.dart';
@@ -36,6 +36,11 @@ class PokemonCardsBloc extends Bloc<PokemonCardsEvent, PokemonCardsState> {
     } else if (event is PokemonCardsSearched) {
       yield PokemonCardsLoadInProgress();
       try {
+        if (event.name.isEmpty) {
+          add(PokemonCardsFetched());
+          return;
+        }
+
         final cards = await pokemonTcgRepository.fetchPokemonTcgCardsByName(
           name: event.name,
         );
