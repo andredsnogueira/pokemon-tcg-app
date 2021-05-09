@@ -129,7 +129,6 @@ class PokemonCardWidget extends StatelessWidget {
             ),
           ),
         );
-        print('hey');
       },
       child: Card(
         child: Padding(
