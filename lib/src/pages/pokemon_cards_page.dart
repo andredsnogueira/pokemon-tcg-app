@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemon_tcg_app/src/blocs/pokemon_cards_bloc.dart';
 import 'package:pokemon_tcg_app/src/models/pokemon_card.dart';
 import 'package:pokemon_tcg_app/src/pages/pages.dart';
-import 'package:pokemon_tcg_app/src/repositories/pokemon_tcg_repository.dart';
 
 class PokemonCardsPage extends StatelessWidget {
   const PokemonCardsPage({Key? key}) : super(key: key);
@@ -15,48 +14,43 @@ class PokemonCardsPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Pokémon TCG Cards'),
       ),
-      body: BlocProvider(
-        create: (_) => PokemonCardsBloc(
-          pokemonTcgRepository: PokemonTcgRepository(),
-        )..add(PokemonCardsFetched()),
-        child: Column(
-          children: [
-            SearchBar(),
-            Expanded(
-              child: BlocBuilder<PokemonCardsBloc, PokemonCardsState>(
-                builder: (context, state) {
-                  if (state is PokemonCardsLoadSuccess) {
-                    return GridView.count(
-                      padding: EdgeInsets.all(16.0),
-                      crossAxisSpacing: 16.0,
-                      mainAxisSpacing: 16.0,
-                      crossAxisCount: 2,
-                      children: List.generate(
-                        state.cards.length,
-                        (index) => PokemonCardWidget(
-                          card: state.cards.elementAt(index),
-                        ),
+      body: Column(
+        children: [
+          SearchBar(),
+          Expanded(
+            child: BlocBuilder<PokemonCardsBloc, PokemonCardsState>(
+              builder: (context, state) {
+                if (state is PokemonCardsLoadSuccess) {
+                  return GridView.count(
+                    padding: EdgeInsets.all(16.0),
+                    crossAxisSpacing: 16.0,
+                    mainAxisSpacing: 16.0,
+                    crossAxisCount: 2,
+                    children: List.generate(
+                      state.cards.length,
+                      (index) => PokemonCardWidget(
+                        card: state.cards.elementAt(index),
                       ),
-                    );
-                  } else if (state is PokemonCardsEmptyLoadSuccess) {
-                    return const Center(
-                      child: Text('No Pokémon Card was found.'),
-                    );
-                  } else if (state is PokemonCardsLoadInProgress) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (state is PokemonCardsLoadFailure) {
-                    return const Center(
-                      child: Text('Something went wrong.'),
-                    );
-                  }
-                  return const SizedBox.shrink();
-                },
-              ),
+                    ),
+                  );
+                } else if (state is PokemonCardsEmptyLoadSuccess) {
+                  return const Center(
+                    child: Text('No Pokémon Card was found.'),
+                  );
+                } else if (state is PokemonCardsLoadInProgress) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state is PokemonCardsLoadFailure) {
+                  return const Center(
+                    child: Text('Something went wrong.'),
+                  );
+                }
+                return const SizedBox.shrink();
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -135,6 +129,7 @@ class PokemonCardWidget extends StatelessWidget {
             ),
           ),
         );
+        print('hey');
       },
       child: Card(
         child: Padding(

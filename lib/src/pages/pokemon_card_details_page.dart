@@ -12,6 +12,7 @@ class PokemonCardDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: Key('hey'),
       appBar: AppBar(
         title: Text(card.name),
       ),
